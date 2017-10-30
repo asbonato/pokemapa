@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Chamado {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_chamado")
 	private int numero;
 	
@@ -35,7 +35,7 @@ public class Chamado {
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="id_fila")
 	private Fila fila;
 	
 	

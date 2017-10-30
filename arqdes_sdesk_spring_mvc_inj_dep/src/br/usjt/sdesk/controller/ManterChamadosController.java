@@ -3,9 +3,11 @@ package br.usjt.sdesk.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +22,14 @@ import br.usjt.sdesk.model.entity.Fila;
 import br.usjt.sdesk.model.service.ChamadoService;
 import br.usjt.sdesk.model.service.FilaService;
 
+@Transactional
 @Controller
 public class ManterChamadosController {
 	private FilaService filaService;
 	private ChamadoService chamadoService;
-	
+
 	@Autowired
-	public ManterChamadosController(FilaService fs, ChamadoService cs){
+	public ManterChamadosController(FilaService fs, ChamadoService cs) {
 		filaService = fs;
 		chamadoService = cs;
 	}
@@ -36,7 +39,7 @@ public class ManterChamadosController {
 		return "index";
 	}
 
-	private ArrayList<Fila> carregarFilas() throws IOException {
+	private List<Fila> carregarFilas() throws IOException {
 		return filaService.listarFilas();
 	}
 
@@ -55,7 +58,7 @@ public class ManterChamadosController {
 	public String criarChamado(@Valid Chamado chamado, BindingResult result,
 			Model model) {
 
-		if (result.hasErrors()) {
+		if (result.hasFieldErrors("descricao")) {
 			try {
 				model.addAttribute("lista", carregarFilas());
 				return "NovoChamado";
@@ -79,7 +82,7 @@ public class ManterChamadosController {
 	@RequestMapping("/listar_filas_fechar")
 	public String listarFilasFechar(Model model) {
 		try {
-			ArrayList<Fila> filas = filaService.listarFilas();
+			List<Fila> filas = filaService.listarFilas();
 			model.addAttribute("filas", filas);
 			return "ChamadoFechar";
 		} catch (IOException e) {
@@ -94,7 +97,7 @@ public class ManterChamadosController {
 			fila = filaService.carregar(fila.getId());
 			model.addAttribute("fila", fila);
 
-			ArrayList<Chamado> chamados = chamadoService.listarChamadosAbertos(fila);
+			List<Chamado> chamados = chamadoService.listarChamadosAbertos(fila);
 			model.addAttribute("chamados", chamados);
 			return "ChamadoFecharSelecionar";
 
@@ -131,7 +134,7 @@ public class ManterChamadosController {
 	@RequestMapping("/listar_filas_exibir")
 	public String listarFilasExibir(Model model) {
 		try {
-			ArrayList<Fila> filas = filaService.listarFilas();
+			List<Fila> filas = filaService.listarFilas();
 			model.addAttribute("filas", filas);
 			return "ChamadoListar";
 		} catch (IOException e) {
@@ -146,7 +149,7 @@ public class ManterChamadosController {
 			fila = filaService.carregar(fila.getId());
 			model.addAttribute("fila", fila);
 
-			ArrayList<Chamado> chamados = chamadoService.listarChamados(fila);
+			List<Chamado> chamados = chamadoService.listarChamados(fila);
 			model.addAttribute("chamados", chamados);
 
 			return "ChamadoListarExibir";

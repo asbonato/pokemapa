@@ -3,6 +3,7 @@ package br.usjt.sdesk.model.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,11 +29,11 @@ public class ChamadoService {
 		return dao.inserirChamado(chamado);
 	}
 	
-	public ArrayList<Chamado> listarChamadosAbertos(Fila fila) throws IOException{
+	public List<Chamado> listarChamadosAbertos(Fila fila) throws IOException{
 		return dao.listarChamadosAbertos(fila);
 	}
 	
-	public ArrayList<Chamado> listarChamados(Fila fila) throws IOException{
+	public List<Chamado> listarChamados(Fila fila) throws IOException{
 		return dao.listarChamados(fila);
 	}
 

@@ -17,7 +17,7 @@ public class UsuarioDAO {
 	EntityManager manager;
 	
 	public boolean validarUsuario(Usuario usuario) throws IOException{
-		String jpql = "select u from Usuario where u.nome = :user and u.senha = :pass";
+		String jpql = "select u from Usuario u where u.nome = :user and u.senha = :pass";
 		Query query = manager.createQuery(jpql);
 		query.setParameter("user", usuario.getNome());
 		query.setParameter("pass", usuario.getSenha());
